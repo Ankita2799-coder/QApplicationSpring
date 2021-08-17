@@ -57,4 +57,11 @@ public class QuizController {
 		this.QuizService.deleteQuiz(Quiz);
 		return ResponseEntity.ok("Deleted Successfully");
 	}
+  //get all Quiz
+    @GetMapping("/active")
+	public ResponseEntity<?> getAllActive()
+	{
+		List<Quiz> categories=this.QuizService.getActiveQuizzes();
+		return ResponseEntity.ok(categories);
+	}
 }

@@ -10,14 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.harbourxquizapp.Service.UserDetailsServiceImp;
 import com.harbourxquizapp.model.UserModel;
+import com.harbourxquizapp.model.homeText;
 import com.harbourxquizapp.model.passswordVO;
 import com.harbourxquizapp.repository.UserRepo;
+import com.harbourxquizapp.repository.hometextRepo;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,6 +33,8 @@ public class UserController {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	 UserDetailsServiceImp UserDetailsService;
+	@Autowired
+	 hometextRepo hometextrepo;
 	@Transactional
 	@PutMapping("/updateUser")
 	public ResponseEntity<?> updateUser(@RequestBody UserModel model)
@@ -58,6 +63,17 @@ public class UserController {
 	public UserModel getCurrentLoginedUser(Principal principal)
 	{
 		return (UserModel)UserDetailsService.loadUserByUsername(principal.getName());
+	}
+	@PutMapping("/edithomeText")
+	public ResponseEntity<?> UpdateText(@RequestBody homeText homeEditvo)
+	{
+		hometextrepo.save(homeEditvo);
+		return ResponseEntity.ok("dsd");
+	}
+	@GetMapping("/edithomeText/{homeId}")
+	public homeText GetText(@PathVariable("homeId") String homeId)
+	{
+		return hometextrepo.findById(Long.valueOf(homeId)).get();	
 	}
 
 }
