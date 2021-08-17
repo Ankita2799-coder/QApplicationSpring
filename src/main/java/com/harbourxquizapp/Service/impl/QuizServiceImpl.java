@@ -42,5 +42,10 @@ public class QuizServiceImpl implements QuizService{
 		// TODO Auto-generated method stub
 		quizRepo.deleteById(quiz);
 	}
-   
+   //get active quizzes
+
+	@Override
+	public List<Quiz> getActiveQuizzes() {
+		return this.quizRepo.findByActive(true);
+	}
 }
